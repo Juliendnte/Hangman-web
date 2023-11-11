@@ -9,7 +9,7 @@ import (
 
 
 
-func ReadLines(path string) ([]string, error) {
+func ReadLines(path string) ([]string, error) {//Met un .txt en []string
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -24,7 +24,7 @@ func ReadLines(path string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-func WriteWord(path string) string {
+func WriteWord(path string) string {//Prend un mot aléatoirement d'un .txt
 	f, err := ReadLines(path)
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
@@ -33,7 +33,7 @@ func WriteWord(path string) string {
 	return f[ale]
 }
 
-func TransformString(s string) []string {
+func TransformString(s string) []string {//Met un mot en []string
 	slice := []string{}
 	for _, c := range s {
 		slice = append(slice, string(c))
@@ -41,7 +41,7 @@ func TransformString(s string) []string {
 	return slice
 }
 
-func TransformSlice(s []string) string {
+func TransformSlice(s []string) string {//Met un []string en mot
 	var str string
 	for _, c := range s {
 		str += c
@@ -49,7 +49,7 @@ func TransformSlice(s []string) string {
 	return str
 }
 
-func ToLower(s string) string {
+func ToLower(s string) string {//Minuscilise toutes les lettres d'un mot
 	var listf string
 	for _, c := range s {
 		if c > 64 && c < 91 {
@@ -61,16 +61,16 @@ func ToLower(s string) string {
 	return listf
 }
 
-func IsInWord(word, s string) bool { // on regarde si c'est dans le mot ou pas
+func IsInWord(word, s string) bool { // on regarde si une lettre est dans le mot ou pas
 	for _, l := range word {
 		if string(l) == s {
-			return true // si ça y est tu peux te le mettre dans le trou
+			return true // si ça y est tu peux te le mettre dans le trou (com réalisé par Nath)
 		}
 	}
 	return false
 }
 
-func IsInList(lst []string, s string) bool {
+func IsInList(lst []string, s string) bool {// on regarde si une lettre est dans la liste ou pas
 	for _, c := range lst {
 		if string(c) == s {
 			return true
