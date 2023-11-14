@@ -1,3 +1,4 @@
+{{define "jeu"}}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,9 +19,17 @@
             </div>
         </header>
         <main>
-
+            <img class="hangman" src="/static/image/{{.Niv}}" alt="pendue" />
+            <p>{{.Word.Answer}}</p>
+            <p>{{.Word.Gs}}</p>
+            <form action="/treatment/jeu" method="POST">
+                <label for="lettre">Saisissez la lettre ou mot que vous voulez testé</label>
+                <input type="text" name="lettre" id="lettre">
+                <button type="submit">Valider</button>
+            </form>
         </main>
 	    <footer>
 	    </footer>
 	</body>
 </html>
+{{end}}

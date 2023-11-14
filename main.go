@@ -11,21 +11,21 @@ import (
 )
 
 type Joueur struct {
-	pseudo  string
-	score   int               //Score du joueur
-	niv     string            //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
-	word    Mot               // Le mot que le mec a
-	test    string            //La lettre qu'il veut testé
-	win     bool              //S'il a gagné ou pas
-	lst     []string          //La liste de lettre qu'il a utilisé
-	ind     map[string]string //clé est une lettre et la valeur un message d'indice sur cette lettre
-	check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
-	message string            //Message affiché selon les cas
+	Pseudo  string
+	Score   int               //Score du joueur
+	Niv     string            //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
+	Word    Mot               // Le mot que le mec a
+	Win     bool              //Pour savoir s'il a win
+	Test    string            //La lettre qu'il veut testé
+	Lst     []string          //La liste de lettre qu'il a utilisé
+	Ind     map[string]string //clé est une lettre et la valeur un message d'indice sur cette lettre
+	Check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
+	Message string            //Message affiché selon les cas
 }
 
 type Mot struct {
-	answer string //Le mot qu'il doit deviner
-	gs     string //Le mot qu'il devine (en underscore)
+	Answer string //Le mot qu'il doit deviner
+	Gs     string //Le mot qu'il devine (en underscore)
 }
 
 var player Joueur = Joueur{} //Déclaration global du joueur
@@ -41,50 +41,62 @@ func main() {
 	})
 
 	http.HandleFunc("/treatment/identification", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre cette fonction sert à récupérer les données envoyées par l'utilisateur
-		player.pseudo = r.FormValue("pseudo")
+		player.Pseudo = r.FormValue("pseudo")
 	})
 
 	http.HandleFunc("/niveau", func(w http.ResponseWriter, r *http.Request) { //Pour la route niveau
 		temp.ExecuteTemplate(w, "niveau", nil)
 	})
 	http.HandleFunc("/treatment/niveau", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
-		player.niv = r.FormValue("niveau")
+		player.Niv = r.FormValue("Niveau")
+		player.Word.Answer = WriteWord("mot/" + player.Niv + ".txt")
 		player.Count()
-
+		player.Score = 6
+		http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 	})
 
 	http.HandleFunc("/jeu", func(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
-		if len(player.test) > 1 {
-			player.TestWord()
-		} else if IsInWord(player.word.answer, player.test) {
-			if IsInWord(player.word.gs, player.test) {
-				player.message = "Vous avez déjà essayez cette lettre"
+		if player.Test == "" {
+			player.ImgHangman()
+			temp.ExecuteTemplate(w, "jeu", player)
+			return
+		}
+		if len(player.Test) > 1 {
+			if player.TestWord() {
+				player.Win = true
+				http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
+			}
+		} else if IsInWord(player.Word.Answer, player.Test) {
+			if IsInList(player.Lst, player.Test) {
+				player.Message = "Vous avez déjà essayez cette lettre"
 			} else {
-				player.check = true
+				player.Lst = append(player.Lst, player.Test)
+				player.Check = true
 				player.GuessLetter()
 			}
-			if player.IsUnderscore() {
-				player.win = true
-			}
+
 		} else {
-			if IsInList(player.lst, player.test) {
-				player.message = "Vous avez déjà essayez cette lettre"
+			if IsInList(player.Lst, player.Test) {
+				player.Message = "Vous avez déjà essayez cette lettre"
 			} else {
-				player.lst = append(player.lst, player.test)
-				player.score--
-				player.message = "Mauvaise lettre"
+				player.Lst = append(player.Lst, player.Test)
+				player.Score--
+				player.Message = "Mauvaise lettre"
 			}
 		}
+		if player.IsUnderscore() {
+			player.Win = true
+			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
+
+		}
+		player.ImgHangman()
 		temp.ExecuteTemplate(w, "jeu", player)
 	})
 
 	http.HandleFunc("/treatment/jeu", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
-		player.check = false
-		if player.win {
-			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
-		} else {
-			http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
-		}
+		player.Test = r.FormValue("lettre")
+		player.Check = false
+		http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 	})
 
 	http.HandleFunc("/resultat", func(w http.ResponseWriter, r *http.Request) { //Pour la route résultat
@@ -95,7 +107,7 @@ func main() {
 	fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
 
-	http.ListenAndServe("localhost:8080", nil)
+	http.ListenAndServe("localhost:8081", nil)
 }
 
 func ReadLines(path string) ([]string, error) { //Met un .txt en []string
@@ -122,48 +134,70 @@ func WriteWord(path string) string { //Prend un mot aléatoirement d'un .txt
 	return f[ale]
 }
 
-func (p *Joueur) Count() string { //Va mettre le mot que le mec doit deviner avec des underscores
-	for n := 0; n < len(p.word.answer); n++ {
-		p.word.gs += "_ "
+func (p *Joueur) ImgHangman() {
+	switch p.Score {
+	case 6:
+		p.Niv = "p0.png"
+	case 5:
+		p.Niv = "p1.png"
+	case 4:
+		p.Niv = "p2"
+	case 3:
+		p.Niv = "p3"
+	case 2:
+		p.Niv = "p4"
+	case 1:
+		p.Niv = "p5"
+	case 0:
+		p.Niv = "p6"
 	}
-	return p.word.gs
 }
 
-func (p *Joueur) indice() {
-	p.GuessLetter()
-	if p.IsUnderscore() {
-		p.win = true
+func (p *Joueur) Count() string { //Va mettre le mot que le mec doit deviner avec des underscores
+	for n := 0; n < len(p.Word.Answer); n++ {
+		p.Word.Gs += "_ "
 	}
+	return p.Word.Gs
 }
+
+// func (p *Joueur) indice() {
+// 	p.GuessLetter()
+// 	if p.IsUnderscore() {
+//		player.Win = true
+// 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
+
+// 	}
+// }
 
 func (p *Joueur) letterAleatory() string { //Donne une lettre aléatoire de la réponse
 	var w string
 	var ale int
-	ale = rand.Intn(len(p.word.answer))
-	w = string(p.word.answer[ale])
-	if IsInList(p.lst, w) {
+	ale = rand.Intn(len(p.Word.Answer))
+	w = string(p.Word.Answer[ale])
+	if IsInList(p.Lst, w) {
 		w = p.letterAleatory()
 	}
 	return w
 }
 
 func (p *Joueur) GuessLetter() { //Met la lettre que le mec a deviné dans le mot underscore
-	p.lst = append(p.lst, p.test)
-	for i, t := range p.word.answer {
-		if string(t) == p.test {
-			p.check = true
-			slc := TransformString(p.word.gs)
-			slc[i*2] = p.test
-			p.word.gs = TransformSlice(slc)
+	p.Lst = append(p.Lst, p.Test)
+	for i, t := range p.Word.Answer {
+		if string(t) == p.Test {
+			p.Check = true
+			slc := TransformString(p.Word.Gs)
+			slc[i*2] = p.Test
+			p.Word.Gs = TransformSlice(slc)
 		}
 	}
 }
 
-func (p *Joueur) TestWord() { //Test si le mot que le mec a rentré est la réponse
-	if p.word.answer == p.test {
-		player.win = true
+func (p *Joueur) TestWord() bool { //Test si le mot que le mec a rentré est la réponse
+	if p.Word.Answer == p.Test {
+		return true
 	} else {
-		p.score -= 2
+		p.Score -= 2
+		return false
 	}
 }
 
@@ -214,7 +248,7 @@ func IsInList(lst []string, s string) bool { // on regarde si une lettre est dan
 }
 
 func (p Joueur) IsUnderscore() bool { //On regarde s'il y a encore des underscores dans le mot
-	for _, c := range p.word.gs {
+	for _, c := range p.Word.Gs {
 		if string(c) == "_" {
 			return false
 		}
