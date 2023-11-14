@@ -8,19 +8,26 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"regexp"
 )
 
 type Joueur struct {
-	Pseudo  string
-	Score   int               //Score du joueur
-	Niv     string            //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
-	Word    Mot               // Le mot que le mec a
-	Win     bool              //Pour savoir s'il a win
-	Test    string            //La lettre qu'il veut testé
-	Lst     []string          //La liste de lettre qu'il a utilisé
+	Pseudo string
+	ScoreG int      //Score du joueur
+	Niv    string   //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
+	Word   Mot      // Le mot que le mec a
+	Win    bool     //Pour savoir s'il a win
+	Test   string   //La lettre qu'il veut testé
+	Lst    []string //La liste de lettre qu'il a utilisé
+	H      Hangman
+}
+
+type Hangman struct {
 	Ind     map[string]string //clé est une lettre et la valeur un message d'indice sur cette lettre
+	Score   int               //Score du hangman
 	Check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
 	Message string            //Message affiché selon les cas
+	Img     string            //Url pour l'image
 }
 
 type Mot struct {
@@ -33,7 +40,7 @@ var player Joueur = Joueur{} //Déclaration global du joueur
 func main() {
 	temp, err := template.ParseGlob("./temp/*.html") //Prend tous les .html du dossier template
 	if err != nil {
-		fmt.Println(fmt.Sprintf("Erreur %s", err.Error()))
+		fmt.Printf("Erreur %s", err.Error())
 	}
 
 	http.HandleFunc("/identification", func(w http.ResponseWriter, r *http.Request) { //Pour la route identification
@@ -48,14 +55,17 @@ func main() {
 		temp.ExecuteTemplate(w, "niveau", nil)
 	})
 	http.HandleFunc("/treatment/niveau", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
+		player.init()
 		player.Niv = r.FormValue("Niveau")
-		player.Word.Answer = WriteWord("mot/" + player.Niv + ".txt")
+		player.Word.Answer = ToLower(WriteWord("mot/" + player.Niv + ".txt"))
 		player.Count()
-		player.Score = 6
 		http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 	})
 
 	http.HandleFunc("/jeu", func(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
+		if player.H.Score <= 0 {
+			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
+		}
 		if player.Test == "" {
 			player.ImgHangman()
 			temp.ExecuteTemplate(w, "jeu", player)
@@ -68,39 +78,47 @@ func main() {
 			}
 		} else if IsInWord(player.Word.Answer, player.Test) {
 			if IsInList(player.Lst, player.Test) {
-				player.Message = "Vous avez déjà essayez cette lettre"
+				player.H.Message = "Vous avez déjà essayez cette lettre"
 			} else {
+				player.H.Message = "Bien trouvé"
 				player.Lst = append(player.Lst, player.Test)
-				player.Check = true
+				player.H.Check = true
 				player.GuessLetter()
 			}
 
 		} else {
 			if IsInList(player.Lst, player.Test) {
-				player.Message = "Vous avez déjà essayez cette lettre"
+				player.H.Message = "Vous avez déjà essayez cette lettre"
 			} else {
 				player.Lst = append(player.Lst, player.Test)
-				player.Score--
-				player.Message = "Mauvaise lettre"
+				player.H.Score--
+				player.H.Message = "Mauvaise lettre"
+				player.ImgHangman()
 			}
 		}
 		if player.IsUnderscore() {
 			player.Win = true
 			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
-
+		} else if player.H.Score <= -1 {
+			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 		}
 		player.ImgHangman()
 		temp.ExecuteTemplate(w, "jeu", player)
 	})
 
 	http.HandleFunc("/treatment/jeu", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
-		player.Test = r.FormValue("lettre")
-		player.Check = false
+		player.Test = ToLower(r.FormValue("lettre"))
+		checkValue, _ := regexp.MatchString("^[a-zA-Z-]{1,64}$", player.Test)
+		if !checkValue {
+			player.H.Message = "Invalide"
+			player.Test=""
+		}
+		player.H.Check = false
 		http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 	})
 
 	http.HandleFunc("/resultat", func(w http.ResponseWriter, r *http.Request) { //Pour la route résultat
-		temp.ExecuteTemplate(w, "resultat", nil)
+		temp.ExecuteTemplate(w, "resultat", player)
 	})
 
 	rootDoc, _ := os.Getwd()
@@ -108,6 +126,18 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
 
 	http.ListenAndServe("localhost:8081", nil)
+}
+
+func (p Joueur) init() {
+	player.Word.Gs = ""
+	player.Win = false
+	player.Test = ""
+	player.H.Check = false
+	player.H.Message = ""
+	player.Word.Answer = ""
+	player.H.Score = 6
+	player.Lst = nil
+	player.H.Img = "p0.png"
 }
 
 func ReadLines(path string) ([]string, error) { //Met un .txt en []string
@@ -135,21 +165,23 @@ func WriteWord(path string) string { //Prend un mot aléatoirement d'un .txt
 }
 
 func (p *Joueur) ImgHangman() {
-	switch p.Score {
+	switch p.H.Score {
 	case 6:
-		p.Niv = "p0.png"
+		p.H.Img = "p0.png"
 	case 5:
-		p.Niv = "p1.png"
+		p.H.Img = "p1.png"
 	case 4:
-		p.Niv = "p2"
+		p.H.Img = "p2.png"
 	case 3:
-		p.Niv = "p3"
+		p.H.Img = "p3.png"
 	case 2:
-		p.Niv = "p4"
+		p.H.Img = "p4.png"
 	case 1:
-		p.Niv = "p5"
+		p.H.Img = "p5.png"
 	case 0:
-		p.Niv = "p6"
+		p.H.Img = "p6.png"
+	default:
+
 	}
 }
 
@@ -184,7 +216,7 @@ func (p *Joueur) GuessLetter() { //Met la lettre que le mec a deviné dans le mo
 	p.Lst = append(p.Lst, p.Test)
 	for i, t := range p.Word.Answer {
 		if string(t) == p.Test {
-			p.Check = true
+			p.H.Check = true
 			slc := TransformString(p.Word.Gs)
 			slc[i*2] = p.Test
 			p.Word.Gs = TransformSlice(slc)
@@ -196,7 +228,7 @@ func (p *Joueur) TestWord() bool { //Test si le mot que le mec a rentré est la 
 	if p.Word.Answer == p.Test {
 		return true
 	} else {
-		p.Score -= 2
+		p.H.Score -= 2
 		return false
 	}
 }
