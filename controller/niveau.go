@@ -34,31 +34,32 @@ func (p *Joueur) Init() {
 	p.Hangman.Score = 0
 	p.Lst = nil
 	p.Hangman.Img = "p0.png"
-    p.Hangman.Ind = map[string]string{"a": "Une des lettres que tu cherche est la lettre de l'étonnement",
-        "b": "Une des lettres que tu cherche est la première lettre du fabriquant de pain",
-        "c": "Une des lettres que tu cherche est la première lettre du surnom d'Alex",
-        "d": "Une des lettres que tu cherche est l'une de nos initiale",
-        "e": "Une des lettres que tu cherche est la lettre la plus utilisé",
-        "f": "Une des lettres que tu cherche est la lettre la plus basse à une évaluation d'un anglophone",
-        "g": "Une des lettres que tu cherche est la première lettre de l'animal le plus rapide",
-        "h": "Une des lettres que tu cherche est une lettre invisible",
-        "i": "Une des lettres que tu cherche est un indice",
-        "j": "Une des lettres que tu cherche commence chaque jour",
-        "k": "Une des lettres que tu cherche est la lettre de l'animal de l'australie",
-        "m": "Une des lettres que tu cherche est la lettre de ta génitrice",
-        "n": "Une des lettres que tu cherche est la lettre du refus",
-        "o": "Une des lettres que tu cherche est la lettre de la comtemplation",
-        "p": "Une des lettres que tu cherche est la lettre de ton géniteur",
-        "q": "Une des lettres que tu cherche est la lettre des fesses",
-        "r": "Une des lettres que tu cherche est la lettre qui 21% dioxygène 78% diazote et 1% de gazs rares",
-        "s": "Une des lettres que tu cherche c'est le j ",
-        "t":"Une des lettres que tu cherche est la lettre",
-        "u":"Une des lettres que tu cherche est la lettre",
-        "v":"Une des lettres que tu cherche est la lettre",
-        "w":"Une des lettres que tu cherche est la lettre",
-        "x":"Une des lettres que tu cherche est la lettre",
-        "y":"Une des lettres que tu cherche est la lettre",
-        "z":"Une des lettres que tu cherche est la lettre"}
+	str :="Petit indice: Une des lettres que tu cherche"
+    p.Hangman.Ind = map[string]string{"a": str+" est la lettre de l'étonnement",
+        "b": str+" est la première lettre du fabriquant de pain",
+        "c": str+" est la première lettre du surnom d'Alex",
+        "d": str+" est l'une de nos initiale",
+        "e": str+" est la lettre la plus utilisé",
+        "f": str+" est la lettre la plus basse à une évaluation d'un anglophone",
+        "g": str+" est la première lettre de l'animal le plus rapide",
+        "h": str+" est une lettre invisible",
+        "i": str+" est un indice",
+        "j": str+" commence chaque jour",
+        "k": str+" est la lettre de l'animal de l'australie",
+        "m": str+" est la lettre de ta génitrice",
+        "n": str+" est la lettre du refus",
+        "o": str+" est la lettre de la comtemplation",
+        "p": str+" est la lettre de ton géniteur",
+        "q": str+" est la lettre des fesses",
+        "r": str+" est la lettre qui 21% dioxygène 78% diazote et 1% de gazs rares",
+        "s": str+" c'est le j ",
+        "t": str+" ",
+        "u": str+" is you",
+        "v": str+" est le signe du dems",
+        "w": str+" est la lettre la moins utilisé",
+        "x": str+" est une lettre de coquin",
+        "y": str+" cabre",
+        "z": str+" est en bas"}
 }
 
 func ToLower(s string) string { //Minuscilise toutes les lettres d'un mot
@@ -99,7 +100,12 @@ func WriteWord(path string) string { //Prend un mot aléatoirement d'un .txt
 
 func (p *Joueur) Count() string { //Va mettre le mot que le mec doit deviner avec des underscores
 	for n := 0; n < len(p.Word.Answer); n++ {
-		p.Word.Gs += "_ "
+	    if string(p.Word.Answer[n])=="-"{
+	        p.Word.Gs+="- "
+	    }else{
+	        p.Word.Gs += "_ "
+	    }
+
 	}
 	return p.Word.Gs
 }
