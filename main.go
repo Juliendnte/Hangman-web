@@ -63,5 +63,6 @@ func main() {
 	fileserver := http.FileServer(http.Dir(rootDoc + "/asset"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
 
+	fmt.Println("(http://localhost:8080) - Server started on port:8080")
 	http.ListenAndServe("localhost:8080", nil)
 }
