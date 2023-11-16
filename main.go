@@ -5,6 +5,7 @@ import (
      routeur"hangman/routeur"
 )
 
+
 func main(){
     initTemp.InitTemplate()
     routeur.InitServe()

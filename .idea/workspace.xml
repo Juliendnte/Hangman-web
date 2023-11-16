@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="92113e9e-5cf4-4509-81ac-769aaf1a88ff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controller/identification.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/jeu.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/niveau.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/resultat.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routeur/routeur.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/initTemplate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/golang/struct.go" beforeDir="false" afterPath="$PROJECT_DIR$/controller/struct.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/golang/struct.go" beforeDir="false" afterPath="$PROJECT_DIR$/golang/struct.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/resultat.html" beforeDir="false" afterPath="$PROJECT_DIR$/temp/resultat.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +61,7 @@
       <workItem from="1700084707778" duration="553000" />
       <workItem from="1700122892347" duration="11688000" />
       <workItem from="1700140896587" duration="5387000" />
-      <workItem from="1700155556655" duration="4275000" />
+      <workItem from="1700155556655" duration="4680000" />
     </task>
     <servers />
   </component>
