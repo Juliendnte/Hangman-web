@@ -1,3 +1,4 @@
+{{define "jeu"}}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,14 +14,28 @@
                 <hr class="separationverti1" />
             </div>
             <div class="headertext">
-                <h1 class="title">Jeu Pendue</h1>
+                <div>
+                    <h1 class="title">Jeu Pendue</h1>
                 <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
+                </div>
+                <p>Ton score: {{.ScoreG}}</p>
+
             </div>
         </header>
         <main>
-
+            <p>{{.H.Score}}/6</p>
+            <img class="hangman" src="/static/image/{{.H.Img}}" alt="pendue" />
+             <p>{{.H.Message}}</p>
+            <p>{{.Word.Gs}}</p>
+            <p>Les lettres que tu as déjà testé {{.Lst}}</p>
+            <form action="/treatment/jeu" method="POST">
+                <label for="lettre">Saisissez la lettre ou mot que vous voulez testé</label>
+                <input type="text" name="lettre" id="lettre">
+                <button type="submit">Valider</button>
+            </form>
         </main>
 	    <footer>
 	    </footer>
 	</body>
 </html>
+{{end}}

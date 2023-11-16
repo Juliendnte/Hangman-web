@@ -1,3 +1,4 @@
+{{define "niveau"}}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -18,9 +19,27 @@
             </div>
         </header>
         <main>
-
+            <p><strong>Quels niveau voulez vous choisir</strong></p>
+            <form action="/treatment/niveau" method="POST">
+                <select id="Niveau" name="Niveau">
+                    <option value="mot3lettres" > 3 lettres </option>
+                    <option value="mot4lettres" > 4 lettres </option>
+                    <option value="mot5lettres" > 5 lettres </option>
+                    <option value="mot6lettres" > 6 lettres </option>
+                    <option value="mot7lettres" > 7 lettres </option>
+                    <option value="mot8lettres" > 8 lettres </option>
+                    <option value="mot9lettres" > 9 lettres </option>
+                    <option value="mot10lettres" > 10 lettres </option>
+                    <option value="mot+10lettres" > + de 10 lettres </option>
+                    <option value="motpenduanglais" > In english </option>
+                    <option value="multilettres" > multilettre </option>
+                    <option value="impossible" > IMPOSSIBLE </option>
+                </select>
+              <button type="submit">Valider</button>
+            </form>
         </main>
 	    <footer>
 	    </footer>
 	</body>
 </html>
+{{end}}

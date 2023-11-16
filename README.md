@@ -1,2 +1,4 @@
 # Hangman-web
-Site d'un Hangman avec un backend en go
+Bienvenue dans un site reprenant le jeu du pendu. Les règles sont simples, il faut juste deviner une lettre qui pourrait être dans le mot mis avec des underscores. Pour jouer à ce jeu, tu devras tout d'abord mettre un pseudo, puis choisir un des 12 modes proposés (multilettres est le rassemblement de mots en 3 lettres jusqu'à mot en + de 10 lettres et impossible est une liste de 300 000 mots du dictionnaire).
+Ensuite, il va falloir deviner une des lettres du mot prises dans le mode que tu auras choisi si tu réussis à deviner le mot, tu tomberas sur une page résultat qui te montrera ton score et une proposition de relancer. Sinon si tu n'arrives pas à deviner le mot et que tu vois le dessin d'un pendu alors tu ne pourras pas rejouer. 
+Mais nous avons d'autres fonctionnalités
