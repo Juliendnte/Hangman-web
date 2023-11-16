@@ -49,6 +49,8 @@ func main() {
 		if len(player.Test) > 1 {
 			if player.TestWord() {
 				player.Win = true
+				NivToScore(player.Niv)
+				player.ScoreG = player.ScoreG + player.NivScore*10
 				player.ImgHangman()
 				http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 			}
@@ -76,6 +78,8 @@ func main() {
 		}
 		if player.IsUnderscore() {
 			player.Win = true
+			NivToScore(player.Niv)
+			player.ScoreG = player.ScoreG + player.NivScore*10
 			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 		} else if player.Hangman.Score >= 6 {
 			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
@@ -183,4 +187,35 @@ func ToLower(s string) string { //Minuscilise toutes les lettres d'un mot
 		}
 	}
 	return listf
+}
+
+func NivToScore(n string) {
+	switch n {
+	case "mot3lettres":
+		player.NivScore = 1
+	case "mot4lettres":
+		player.NivScore = 2
+	case "mot5lettres":
+		player.NivScore = 3
+	case "mot6lettres":
+		player.NivScore = 4
+	case "mot7lettres":
+		player.NivScore = 5
+	case "mot8lettres":
+		player.NivScore = 6
+	case "mot9lettres":
+		player.NivScore = 7
+	case "mot10lettres":
+		player.NivScore = 8
+	case "motpenduanglais":
+		player.NivScore = 9
+	case "mot+10lettres":
+		player.NivScore = 10
+	case "multilettres":
+		player.NivScore = 11
+	case "impossible":
+		player.NivScore = 12
+	default:
+		return
+	}
 }
