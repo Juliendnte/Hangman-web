@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
 )
 
 type Joueur struct {
@@ -74,6 +75,7 @@ func main() {
 			}
 		} else if IsInWord(player.Word.Answer, player.Test) {
 			if IsInList(player.Lst, player.Test) {
+			    player.Hangman.Check = false
 				player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 			} else {
 				player.Hangman.Message = "Bien trouvé"
@@ -83,6 +85,7 @@ func main() {
 			}
 
 		} else {
+		    player.Hangman.Check = false
 			if IsInList(player.Lst, player.Test) {
 				player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 			} else {
@@ -104,7 +107,7 @@ func main() {
 
 	http.HandleFunc("/treatment/jeu", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
 		player.Test = ToLower(r.FormValue("lettre"))
-		checkValue, _ := regexp.MatchString("^[a-zA-Z-]{1,64}$", player.Test)
+		checkValue, _ := regexp.MatchString("^[a-zA-Z-]$", player.Test)
 		if !checkValue {
 			player.Hangman.Message = "Invalide"
 			player.Test = ""
@@ -168,24 +171,10 @@ func Append(lst []string, s string) []string { //Append sans occurence dans la l
 }
 
 func (p *Joueur) ImgHangman() {
-	switch p.Hangman.Score {
-	case 0:
-		p.Hangman.Img = "p0.png"
-	case 1:
-		p.Hangman.Img = "p1.png"
-	case 2:
-		p.Hangman.Img = "p2.png"
-	case 3:
-		p.Hangman.Img = "p3.png"
-	case 4:
-		p.Hangman.Img = "p4.png"
-	case 5:
-		p.Hangman.Img = "p5.png"
-	case 6:
-		p.Hangman.Img = "p6.png"
-	default:
-
-	}
+    if p.Hangman.Score>6{
+        p.Hangman.Score=6
+    }
+    p.Hangman.Img="p"+strconv.Itoa(p.Hangman.Score)+".png"
 }
 
 // func (p *Joueur) indice() {
