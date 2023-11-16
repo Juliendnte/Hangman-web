@@ -14,6 +14,7 @@ import (
 
 type Joueur struct {
 	Pseudo  string
+	Mdp     string   //Mot de passe du joueur
 	ScoreG  int      //Score du joueur
 	Niv     string   //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
 	Word    Mot      // Le mot que le mec a
@@ -50,6 +51,8 @@ func main() {
 
 	http.HandleFunc("/treatment/identification", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre cette fonction sert à récupérer les données envoyées par l'utilisateur
 		player.Pseudo = r.FormValue("pseudo")
+		player.Mdp = r.FormValue("mot")
+		http.Redirect(w, r, "/niveau", http.StatusMovedPermanently)
 	})
 
 	http.HandleFunc("/niveau", func(w http.ResponseWriter, r *http.Request) { //Pour la route niveau
@@ -75,7 +78,7 @@ func main() {
 			}
 		} else if IsInWord(player.Word.Answer, player.Test) {
 			if IsInList(player.Lst, player.Test) {
-			    player.Hangman.Check = false
+				player.Hangman.Check = false
 				player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 			} else {
 				player.Hangman.Message = "Bien trouvé"
@@ -85,7 +88,7 @@ func main() {
 			}
 
 		} else {
-		    player.Hangman.Check = false
+			player.Hangman.Check = false
 			if IsInList(player.Lst, player.Test) {
 				player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 			} else {
@@ -124,6 +127,7 @@ func main() {
 	fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
 
+	fmt.Println("(http://localhost:8081) - Server started on port:8081")
 	http.ListenAndServe("localhost:8081", nil)
 }
 
@@ -171,10 +175,10 @@ func Append(lst []string, s string) []string { //Append sans occurence dans la l
 }
 
 func (p *Joueur) ImgHangman() {
-    if p.Hangman.Score>6{
-        p.Hangman.Score=6
-    }
-    p.Hangman.Img="p"+strconv.Itoa(p.Hangman.Score)+".png"
+	if p.Hangman.Score > 6 {
+		p.Hangman.Score = 6
+	}
+	p.Hangman.Img = "p" + strconv.Itoa(p.Hangman.Score) + ".png"
 }
 
 // func (p *Joueur) indice() {
