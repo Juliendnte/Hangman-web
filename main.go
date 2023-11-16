@@ -3,41 +3,16 @@ package main
 import (
 	"bufio"
 	"fmt"
+	h "hangman/golang"
 	"html/template"
 	"log"
 	"math/rand"
 	"net/http"
 	"os"
 	"regexp"
-	"strconv"
 )
 
-type Joueur struct {
-	Pseudo  string
-	Mdp     string   //Mot de passe du joueur
-	ScoreG  int      //Score du joueur
-	Niv     string   //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
-	Word    Mot      // Le mot que le mec a
-	Win     bool     //Pour savoir s'il a win
-	Test    string   //La lettre qu'il veut testé
-	Lst     []string //La liste de lettre qu'il a utilisé
-	Hangman Site
-}
-
-type Site struct {
-	Ind     map[string]string //clé est une lettre et la valeur un message d'indice sur cette lettre
-	Score   int               //Score du hangman /6
-	Check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
-	Message string            //Message affiché selon les cas
-	Img     string            //Url pour l'image
-}
-
-type Mot struct {
-	Answer string //Le mot qu'il doit deviner
-	Gs     string //Le mot qu'il devine (en underscore)
-}
-
-var player Joueur = Joueur{} //Déclaration global du joueur
+var player h.Joueur //Déclaration global du joueur
 
 func main() {
 	temp, err := template.ParseGlob("./temp/*.html") //Prend tous les .html du dossier template
@@ -59,7 +34,7 @@ func main() {
 		temp.ExecuteTemplate(w, "niveau", nil)
 	})
 	http.HandleFunc("/treatment/niveau", func(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
-		player.init()
+		player.Init()
 		player.Niv = r.FormValue("Niveau")
 		player.Word.Answer = ToLower(WriteWord("mot/" + player.Niv + ".txt"))
 		player.Count()
@@ -74,6 +49,7 @@ func main() {
 		if len(player.Test) > 1 {
 			if player.TestWord() {
 				player.Win = true
+				player.ImgHangman()
 				http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 			}
 		} else if IsInWord(player.Word.Answer, player.Test) {
@@ -127,20 +103,9 @@ func main() {
 	fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
 
-	fmt.Println("(http://localhost:8081) - Server started on port:8081")
+	fmt.Println("(http://localhost:8081/niveau) - Server started on port:8081")
 	http.ListenAndServe("localhost:8081", nil)
-}
-
-func (p *Joueur) init() {
-	p.Word.Gs = ""
-	p.Win = false
-	p.Test = ""
-	p.Hangman.Check = false
-	p.Hangman.Message = ""
-	p.Word.Answer = ""
-	p.Hangman.Score = 0
-	p.Lst = nil
-	p.Hangman.Img = "p0.png"
+	fmt.Println("Server close on port:8081")
 }
 
 func ReadLines(path string) ([]string, error) { //Met un .txt en []string
@@ -174,53 +139,22 @@ func Append(lst []string, s string) []string { //Append sans occurence dans la l
 	return lst
 }
 
-func (p *Joueur) ImgHangman() {
-	if p.Hangman.Score > 6 {
-		p.Hangman.Score = 6
-	}
-	p.Hangman.Img = "p" + strconv.Itoa(p.Hangman.Score) + ".png"
-}
-
-// func (p *Joueur) indice() {
-// 	p.GuessLetter()
-// 	if p.IsUnderscore() {
-//		player.Win = true
-// 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
-
-// 	}
-// }
-
-func (p *Joueur) letterAleatory() string { //Donne une lettre aléatoire de la réponse
-	var w string
-	var ale int
-	ale = rand.Intn(len(p.Word.Answer))
-	w = string(p.Word.Answer[ale])
-	if IsInList(p.Lst, w) {
-		w = p.letterAleatory()
-	}
-	return w
-}
-
-func (p *Joueur) GuessLetter() { //Met la lettre que le mec a deviné dans le mot underscore
-	p.Lst = Append(p.Lst, p.Test)
-	for i, t := range p.Word.Answer {
-		if string(t) == p.Test {
-			p.Hangman.Check = true
-			slc := TransformString(p.Word.Gs)
-			slc[i*2] = p.Test
-			p.Word.Gs = TransformSlice(slc)
+func IsInWord(word, s string) bool { // on regarde si une lettre est dans le mot ou pas
+	for _, l := range word {
+		if string(l) == s {
+			return true // si ça y est tu peux te le mettre dans le trou (com réalisé par Nath)
 		}
 	}
+	return false
 }
 
-func (p *Joueur) TestWord() bool { //Test si le mot que le mec a rentré est la réponse
-	if p.Word.Answer == p.Test {
-		return true
-	} else {
-		p.Hangman.Message = "Ce n'est pas le bon mot"
-		p.Hangman.Score += 2
-		return false
+func IsInList(lst []string, s string) bool { // on regarde si une lettre est dans la liste ou pas
+	for _, c := range lst {
+		if string(c) == s {
+			return true
+		}
 	}
+	return false
 }
 
 func TransformString(s string) []string { //Met un mot en []string
@@ -249,38 +183,4 @@ func ToLower(s string) string { //Minuscilise toutes les lettres d'un mot
 		}
 	}
 	return listf
-}
-
-func (p *Joueur) Count() string { //Va mettre le mot que le mec doit deviner avec des underscores
-	for n := 0; n < len(p.Word.Answer); n++ {
-		p.Word.Gs += "_ "
-	}
-	return p.Word.Gs
-}
-
-func IsInWord(word, s string) bool { // on regarde si une lettre est dans le mot ou pas
-	for _, l := range word {
-		if string(l) == s {
-			return true // si ça y est tu peux te le mettre dans le trou (com réalisé par Nath)
-		}
-	}
-	return false
-}
-
-func IsInList(lst []string, s string) bool { // on regarde si une lettre est dans la liste ou pas
-	for _, c := range lst {
-		if string(c) == s {
-			return true
-		}
-	}
-	return false
-}
-
-func (p Joueur) IsUnderscore() bool { //On regarde s'il y a encore des underscores dans le mot
-	for _, c := range p.Word.Gs {
-		if string(c) == "_" {
-			return false
-		}
-	}
-	return true
 }
