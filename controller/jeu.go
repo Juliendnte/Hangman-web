@@ -47,10 +47,10 @@ func Jeu (w http.ResponseWriter, r *http.Request) { //Pour la route jeu
 		NivToScore(player.Niv)
 		player.ScoreG = player.ScoreG + player.NivScore*10
 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
-	}else if player.Hangman.Score > 6 {
+	}else if player.Hangman.Score > 11 {
 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 	}
-	if player.Hangman.Score==6 && IndCheck==false{
+	if player.Hangman.Score==11 && IndCheck==false{
 	    IndCheck=true
 	    player.Hangman.Message=player.Hangman.Ind[player.LetterAleatory()]
 	}

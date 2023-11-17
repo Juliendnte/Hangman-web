@@ -23,14 +23,14 @@
                 
                 <p>Bravo tu as gagné, le mot était bien {{.Word.Answer}}</p>
                 <p>ton score est de : {{.ScoreG}}</p>
+                
                 <p>Tu peux continuer et exploser ton record en recommencant une partie !</p>
                 <a href="niveau"><button>Recommencer</button></a>
             {{else}}
                 <p>Malheureusement tu as perdu, le mot était {{.Word.Answer}}</p>
                 <p>tu as quand meme atteinds un score de {{.ScoreG}} !! Bien joué !</p>
+                <img class="hangman" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
             {{end}}
-
-            
         </main>
 	    <footer>
 	    </footer>

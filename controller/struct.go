@@ -15,7 +15,7 @@ type Joueur struct {
 
 type Site struct {
 	Ind     map[string]string //clé est une lettre et la valeur un message d'indice sur cette lettre
-	Score   int               //Score du hangman /6
+	Score   int               //Score du hangman /12
 	Check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
 	Message string            //Message affiché selon les cas
 	Img     string            //Url pour l'image
