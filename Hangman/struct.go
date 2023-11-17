@@ -2,7 +2,6 @@ package Hangman
 
 type Joueur struct {
 	Pseudo   string
-	Mdp      string   //Mot de passe du joueur
 	ScoreG   int      //Score du joueur
 	Niv      string   //Choix du niveau (1= niveau 1 etc... jusqu'à 12)
 	NivScore int      //je recup le niveau et je le transforme en int pour faire le score avec

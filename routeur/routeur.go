@@ -7,19 +7,19 @@ import (
 	"os"
 )
 
-func InitServe(){
-    http.HandleFunc("/identification",h.Identification)
-    http.HandleFunc("/treatment/identification",h.InitId)
-    http.HandleFunc("/niveau",h.Niveau)
-    http.HandleFunc("/treatment/niveau",h.InitNiv)
-    http.HandleFunc("/jeu",h.Jeu)
-    http.HandleFunc("/treatment/jeu",h.InitJeu)
-    http.HandleFunc("/resultat",h.Resultat)
+func InitServe() {
+	http.HandleFunc("/", h.Identification)
+	http.HandleFunc("/treatment/identification", h.InitId)
+	http.HandleFunc("/niveau", h.Niveau)
+	http.HandleFunc("/treatment/niveau", h.InitNiv)
+	http.HandleFunc("/jeu", h.Jeu)
+	http.HandleFunc("/treatment/jeu", h.InitJeu)
+	http.HandleFunc("/resultat", h.Resultat)
 
-    rootDoc, _ := os.Getwd()
-    fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
-    http.Handle("/static/", http.StripPrefix("/static/", fileserver))
-   	fmt.Println("(http://localhost:8081/identification) - Server started on port:8081")
-   	http.ListenAndServe("localhost:8081", nil)
-   	fmt.Println("Server close on port:8081")
+	rootDoc, _ := os.Getwd()
+	fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
+	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
+	fmt.Println("(http://localhost:8081/) - Server started on port:8081")
+	http.ListenAndServe("localhost:8081", nil)
+	fmt.Println("Server close on port:8081")
 }

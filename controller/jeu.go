@@ -10,65 +10,71 @@ import (
 var IndCheck bool
 
 func Jeu(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
-	if player.Test == "" {
-		initTemp.Temp.ExecuteTemplate(w, "jeu", player)
+	if hang.Player.Hangman.Url !="/jeu"{
+		http.Redirect(w, r, hang.Player.Hangman.Url, http.StatusMovedPermanently)
+	}
+	if hang.Player.Test == "" {
+		initTemp.Temp.ExecuteTemplate(w, "jeu", hang.Player)
 		return
 	}
-	if len(player.Test) > 1 {
-		if player.TestWord() { //return true si le mot qu'il a envoyé est égale au mot
-			player.Win = true
-			NivToScore(player.Niv)
-			player.ScoreG = player.ScoreG + player.NivScore*10
-			player.ImgHangman() //Set l'url pour l'affichage du hangman
+	if len(hang.Player.Test) > 1 {
+		if hang.Player.TestWord() { //return true si le mot qu'il a envoyé est égale au mot
+			hang.Player.Win = true
+			hang.NivToScore(hang.Player.Niv)
+			hang.Player.ScoreG = hang.Player.ScoreG + hang.Player.NivScore*10
+			hang.Player.ImgHangman() //Set l'url pour l'affichage du hangman
+			hang.Player.Hangman.Url="/resultat"
 			http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 		}
-	} else if IsInWord(player.Word.Answer, player.Test) {
-		if IsInList(player.Lst, player.Test) { //return true si la lettre est dans la liste
-			player.Hangman.Check = false
-			player.Hangman.Message = "Vous avez déjà essayez cette lettre"
+	} else if hang.IsInWord(hang.Player.Word.Answer, hang.Player.Test) {
+		if hang.IsInList(hang.Player.Lst, hang.Player.Test) { //return true si la lettre est dans la liste
+			hang.Player.Hangman.Check = false
+			hang.Player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 		} else {
-			player.Hangman.Message = "Bien trouvé"
-			player.Lst = Append(player.Lst, player.Test)
-			player.Hangman.Check = true
-			player.GuessLetter() //Met la lettre dans le mot avec les underscore
+			hang.Player.Hangman.Message = "Bien trouvé"
+			hang.Player.Lst = hang.Append(hang.Player.Lst, hang.Player.Test)
+			hang.Player.Hangman.Check = true
+			hang.Player.GuessLetter() //Met la lettre dans le mot avec les underscore
 		}
 	} else {
-		player.Hangman.Check = false
-		if IsInList(player.Lst, player.Test) {
-			player.Hangman.Message = "Vous avez déjà essayez cette lettre"
+		hang.Player.Hangman.Check = false
+		if hang.IsInList(hang.Player.Lst, hang.Player.Test) {
+			hang.Player.Hangman.Message = "Vous avez déjà essayez cette lettre"
 		} else {
-			player.Lst = Append(player.Lst, player.Test)
-			player.Hangman.Score++
-			player.Hangman.Message = "Mauvaise lettre"
-			player.ImgHangman()
+			hang.Player.Lst = hang.Append(hang.Player.Lst, hang.Player.Test)
+			hang.Player.Hangman.Score++
+			hang.Player.Hangman.Message = "Mauvaise lettre"
+			hang.Player.ImgHangman()
 		}
 	}
-	if player.IsUnderscore() { //Return true s'il n'y a plus d'underscore dans le mot
-		player.Win = true
-		NivToScore(player.Niv)
-		player.ScoreG = player.ScoreG + player.NivScore*10
+	if hang.Player.IsUnderscore() { //Return true s'il n'y a plus d'underscore dans le mot
+		hang.Player.Win = true
+		hang.NivToScore(hang.Player.Niv)
+		hang.Player.ScoreG = hang.Player.ScoreG + hang.Player.NivScore*10
+		hang.Player.Hangman.Url="/resultat"
 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
-	} else if player.Hangman.Score > 11 {
+	} else if hang.Player.Hangman.Score > 11 {
+		hang.Player.Hangman.Url="/resultat"
 		http.Redirect(w, r, "/resultat", http.StatusMovedPermanently)
 	}
-	if player.Hangman.Score == 11 && IndCheck == false {
+	if hang.Player.Hangman.Score == 11 && IndCheck == false {
 		IndCheck = true
-		player.Hangman.Message = player.Hangman.Ind[player.LetterAleatory()]
+		hang.Player.Hangman.Message = hang.Player.Hangman.Ind[hang.Player.LetterAleatory()]
 	}
-	player.ImgHangman()
-	initTemp.Temp.ExecuteTemplate(w, "jeu", player)
+	hang.Player.ImgHangman()
+	initTemp.Temp.ExecuteTemplate(w, "jeu", hang.Player)
 }
 
 func InitJeu(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'une route a une autre
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/identification", http.StatusMovedPermanently)
 	}
-	player.Test = ToLower(r.FormValue("lettre"))
-	checkValue, _ := regexp.MatchString("^[a-zA-Z]{1,25}$", player.Test)
+	hang.Player.Test = hang.ToLower(r.FormValue("lettre"))
+	checkValue, _ := regexp.MatchString("^[a-zA-Z]{1,25}$", hang.Player.Test)
 	if !checkValue {
-		player.Hangman.Message = "Invalide"
-		player.Test = ""
+		hang.Player.Hangman.Message = "Invalide"
+		hang.Player.Test = ""
 	}
-	player.Hangman.Check = false
+	hang.Player.Hangman.Check = false
 	http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 }
