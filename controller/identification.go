@@ -2,10 +2,12 @@ package controller
 
 import (
 	"net/http"
+	hang "hangman/Hangman"
 	initTemp "hangman/temp"
 )
 
 func Identification (w http.ResponseWriter, r *http.Request) { //Pour la route identification
+	if hang.Player
 	initTemp.Temp.ExecuteTemplate(w, "identification", nil)
 }
 

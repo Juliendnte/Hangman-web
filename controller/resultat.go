@@ -2,6 +2,7 @@ package controller
 
 import (
     initTemp "hangman/temp"
+    hang "hangman/Hangman"
     "net/http"
 )
 

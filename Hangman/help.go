@@ -1,4 +1,4 @@
-package controller
+package Hangman
 
 import (
 	"bufio"
