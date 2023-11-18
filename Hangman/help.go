@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func NivToScore(n string) {
+func NivToScore(n string) {//Set le nombre de point que l'utilisateur gagne selon le niveau
 	switch n {
 	case "mot3lettres":
 		Player.NivScore = 1
@@ -139,14 +139,14 @@ func (p *Joueur) Init() {
 	p.Lst = nil
 	p.Hangman.Img = "tarot0.jpg"
 	str := "Petit indice: Une des lettres que tu cherche"
-	p.Hangman.Ind = map[string]string{"a": str + " est la lettre de l'étonnement",
-		"b": str + " est la première lettre du fabriquant de pain",
-		"c": str + " est la première lettre du surnom d'Alex",
+	p.Hangman.Ind = map[string]string{"a": str + " est un effet du lisopaine",
+		"b": str + " aide pour conduire tous véhicules dépassant 3tonne 5",
+		"c": str + " peut être en 50 ,100 ,150 ou 200 sur MarioKart",
 		"d": str + " est l'une de nos initiale",
 		"e": str + " est la lettre la plus utilisé",
-		"f": str + " est la lettre la plus basse à une évaluation d'un anglophone",
-		"g": str + " est la première lettre de l'animal le plus rapide",
-		"h": str + " est une lettre invisible",
+		"f": str + " signe l'abondonement de toute l'équipe quand elle est signé deux fois",
+		"g": str + " peut faire capté la 5 avec le vaccin ",
+		"h": str + " est une lettre avec la cape d'invisibilité",
 		"i": str + " est un indice",
 		"j": str + " commence chaque jour",
 		"k": str + " est la lettre de l'animal de l'australie",
@@ -155,15 +155,15 @@ func (p *Joueur) Init() {
 		"o": str + " est la lettre de la comtemplation",
 		"p": str + " est la lettre de ton géniteur",
 		"q": str + " est la lettre des fesses",
-		"r": str + " est la lettre qui 21% dioxygène 78% diazote et 1% de gazs rares",
+		"r": str + " est la lettre qui a 21% dioxygène 78% diazote et 1% de gazs rares",
 		"s": str + " c'est le j ",
-		"t": str + " ",
+		"t": str + " est la maison des fantômes",
 		"u": str + " is you",
 		"v": str + " est le signe du dems",
 		"w": str + " est la lettre la moins utilisé",
 		"x": str + " est une lettre de coquin",
 		"y": str + " cabre",
-		"z": str + " est en bas"}
+		"z": str + " est à la fin d'un anime de daron où il aime se faire des teinture"}
 }
 
 func ToLower(s string) string { //Minuscilise toutes les lettres d'un mot

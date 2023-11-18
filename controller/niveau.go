@@ -17,10 +17,10 @@ func InitNiv(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'un
 	if r.Method != http.MethodPost {
       	http.Redirect(w, r, "/identification", http.StatusMovedPermanently)
     }
-	hang.Player.Hangman.Url="/jeu"
-	hang.Player.Init()
+	hang.Player.Init()//Ré-initialise mes valeurs quand je reviens sur la page niveau 
 	hang.Player.Niv = r.FormValue("Niveau")
-	hang.Player.Word.Answer = hang.ToLower(hang.WriteWord("mot/" + hang.Player.Niv + ".txt"))
-	hang.Player.Count()
+	hang.Player.Word.Answer = hang.ToLower(hang.WriteWord("mot/" + hang.Player.Niv + ".txt"))//Prend un mot aléatoire du mode choisi et le minusculise
+	hang.Player.Count()//Init le mot underscore
+	hang.Player.Hangman.Url="/jeu"
 	http.Redirect(w, r, "/jeu", http.StatusMovedPermanently)
 }

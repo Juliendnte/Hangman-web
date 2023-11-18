@@ -17,8 +17,8 @@ type Site struct {
 	Score   int               //Score du hangman /12
 	Check   bool              //check si on a réussi a guess une lettre dans le mot (pour l'html pratique)
 	Message string            //Message affiché selon les cas
-	Url     string
-	Img     string //Url pour l'image
+	Url     string			  //Url pour savoir où je suis et où je dois aller
+	Img     string 			  //Le chemin de l'image
 }
 
 type Mot struct {

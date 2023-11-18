@@ -7,6 +7,6 @@ import (
 
 
 func main(){
-    initTemp.InitTemplate()
-    routeur.InitServe()
+    initTemp.InitTemplate()//Init des templates
+    routeur.InitServe()//Init des routes
 }
