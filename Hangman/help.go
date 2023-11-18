@@ -161,7 +161,7 @@ func (p *Joueur) Init() {
 		"h": str + " est une lettre avec la cape d'invisibilité",
 		"i": str + " est un indice",
 		"j": str + " commence chaque jour",
-		"k": str + " est la lettre de l'animal de l'australie",
+		"k": str + " est avant aggle",
 		"m": str + " est la lettre de ta génitrice",
 		"n": str + " est la lettre du refus",
 		"o": str + " est la lettre de la comtemplation",
