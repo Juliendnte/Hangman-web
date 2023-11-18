@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func InitServe() {//Appelle la fonction attitré
+func InitServe() { //Appelle la fonction attitré
 	http.HandleFunc("/", h.Identification)
 	http.HandleFunc("/treatment/identification", h.InitId)
 	http.HandleFunc("/niveau", h.Niveau)

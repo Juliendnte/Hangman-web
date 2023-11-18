@@ -8,31 +8,43 @@ import (
 	"strconv"
 )
 
-func NivToScore(n string) {//Set le nombre de point que l'utilisateur gagne selon le niveau
+func NivToScore(n string) { //Set le nombre de point que l'utilisateur gagne selon le niveau
 	switch n {
 	case "mot3lettres":
+		Player.Difficulty = 1
 		Player.NivScore = 1
 	case "mot4lettres":
+		Player.Difficulty = 1
 		Player.NivScore = 2
 	case "mot5lettres":
+		Player.Difficulty = 1
 		Player.NivScore = 3
 	case "mot6lettres":
+		Player.Difficulty = 1
 		Player.NivScore = 4
 	case "mot7lettres":
+		Player.Difficulty = 2
 		Player.NivScore = 5
 	case "mot8lettres":
+		Player.Difficulty = 2
 		Player.NivScore = 6
 	case "mot9lettres":
+		Player.Difficulty = 2
 		Player.NivScore = 7
 	case "mot10lettres":
+		Player.Difficulty = 2
 		Player.NivScore = 8
 	case "motpenduanglais":
+		Player.Difficulty = 3
 		Player.NivScore = 9
 	case "mot+10lettres":
+		Player.Difficulty = 3
 		Player.NivScore = 10
 	case "multilettres":
+		Player.Difficulty = 3
 		Player.NivScore = 11
 	case "impossible":
+		Player.Difficulty = 3
 		Player.NivScore = 12
 	default:
 		return

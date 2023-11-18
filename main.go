@@ -1,12 +1,11 @@
 package main
 
 import (
-     initTemp"hangman/temp"
-     routeur"hangman/routeur"
+	routeur "hangman/routeur"
+	initTemp "hangman/temp"
 )
 
-
-func main(){
-    initTemp.InitTemplate()//Init des templates
-    routeur.InitServe()//Init des routes
+func main() {
+	initTemp.InitTemplate() //Init des templates
+	routeur.InitServe()     //Init des routes
 }
