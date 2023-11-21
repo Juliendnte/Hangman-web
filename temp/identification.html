@@ -9,17 +9,17 @@
 	</head>
 	<body>
         <header>
-            <img class="imglogo" src="/static/image/unnamed.webp"alt="logo pendue"/>
-            <div>
-                <hr class="separationverti1" />
-            </div>
             <div class="headertext">
-                <h1 class="title">Jeu Pendu</h1>
-                <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
+                <h1 class="credit">by Julien Dante &amp; Vito Deriu</h1>
             </div>
         </header>
         <main>
-            <form action="/treatment/identification" method="POST">
+            <p>Bienvenue dans le Tarot du Pendu !</p>
+            <div class="cartetarot">
+                <img class="imgcarte" src="/static/image/tarot12.jpg" alt="carte de tarot du pendu">
+            </div>
+            <p>Veuillez entrer votre pseudonyme</p>
+            <form class="form" action="/treatment/identification" method="POST">
                 <label for="pseudo">Pseudo</label>
                 <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo">
                 <button type="submit">Valider</button>
@@ -29,4 +29,4 @@
 	    </footer>
 	</body>
 </html>
-{{end}}
+{{end}}*

@@ -14,12 +14,16 @@
                 <hr class="separationverti1" />
             </div>
             <div class="headertext">
-                <h1 class="title">Jeu Pendue</h1>
+                <h1 class="title">Le Tarot du Pendu</h1>
                 <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
             </div>
         </header>
         <main>
-            <p><strong>Quels niveau voulez vous choisir</strong></p>
+            <p>Dans ce jeu nous vous proposerons un mot a deviner. 
+                Vous pourrez proposer une lettre pour savoir si elle est contenue dans le mot pour vous aider a le deviner.
+                A chaque lettre qui n'est pas présente dans le mot vous passerez a la carte suivante mais attention a ne pas 
+                atteindre la carte du Pendu si non vous finirez la tête en bas ! </p>
+            <p><strong>Quel difficulté souhaitez vous choisir</strong></p>
             <form action="/treatment/niveau" method="POST">
                 <select id="Niveau" name="Niveau">
                     <option value="mot3lettres" > 3 lettres </option>
@@ -33,7 +37,7 @@
                     <option value="mot+10lettres" > + de 10 lettres </option>
                     <option value="motpenduanglais" > In english </option>
                     <option value="multilettres" > multilettre </option>
-                    <option value="impossible" > IMPOSSIBLE </option>
+                    <option value="impossible" > DANTESQUE </option>
                 </select>
               <button type="submit">Valider</button>
             </form>

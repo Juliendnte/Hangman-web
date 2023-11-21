@@ -14,20 +14,27 @@
                 <hr class="separationverti1" />
             </div>
             <div class="headertext">
-                <h1 class="title">Jeu Pendue</h1>
+                <h1 class="title">Le Tarot du Pendu</h1>
                 <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
             </div>
         </header>
         <main>
             {{if .Win}}
-                
-                <p>Bravo tu as gagné, le mot était bien {{.Word.Answer}}</p>
+                {{if eq .Difficulty 1}}
+                <p>Bravo {{.Pseudo}} c'était plutot simple.. le mot était bien {{.Word.Answer}}</p>
                 <p>ton score est de : {{.ScoreG}}</p>
+                {{else if eq .Difficulty 2}}
+                <p>Bravo tu as gagné bg ! Le mot était bien {{.Word.Answer}}</p>
+                <p>ton score est de : {{.ScoreG}}</p>
+                {{else}}
+                <p>C'est qui notre champion ?? C'est {{.Pseudo}} !!!! <br> C'était pas facile mais comme t'es trop fort le mot était bien {{.Word.Answer}}</p>
+                <p>ton score est de : {{.ScoreG}}</p>
+                {{end}}
                 
                 <p>Tu peux continuer et exploser ton record en recommencant une partie !</p>
                 <a href="niveau"><button>Recommencer</button></a>
             {{else}}
-                <p>Malheureusement tu as perdu, le mot était {{.Word.Answer}}</p>
+                <p>Malheureusement tu as perdu sale noob, le mot était {{.Word.Answer}}</p>
                 <p>tu as quand meme atteinds un score de {{.ScoreG}} !! Bien joué !</p>
                 <img class="hangman" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
             {{end}}

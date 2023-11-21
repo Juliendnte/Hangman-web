@@ -15,7 +15,7 @@
             </div>
             <div class="headertext">
                 <div>
-                    <h1 class="title">Jeu Pendue</h1>
+                    <h1 class="title">Le Tarot du Pendu</h1>
                 <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
                 </div>
                 <p>Ton score: {{.ScoreG}}</p>
@@ -29,9 +29,11 @@
             <p>{{.Word.Gs}}</p>
             <p>Les lettres que tu as déjà testé {{.Lst}}</p>
             <form action="/treatment/jeu" method="POST">
-                <label for="lettre">Saisissez la lettre ou mot que vous voulez testé</label>
+                <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
+
                 <input type="text" name="lettre" id="lettre">
                 <button type="submit">Valider</button>
+
             </form>
 
         </main>
