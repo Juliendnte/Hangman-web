@@ -6,30 +6,20 @@
 		<title>Jeu Hangman</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/jeu.css">
-        <script src="../js/audio.js"></script>
 	</head>
 	<body>
-        <header>
-            <img class="imglogo" src="/static/image/unnamed.webp"alt="logo pendue"/>
-            <div>
-                <hr class="separationverti1" />
-            </div>
-            <div class="headertext">
-                <div>
-                    <h1 class="title">Le Tarot du Pendu</h1>
-                <h2 class="spe">by DANTE Julien &amp; DERIU Vito</h2>
-                </div>
-                <p>Ton score: {{.ScoreG}}</p>
-
-            </div>
-        </header>
+    <header>
+        <div class="headertext">
+            <h1 class="credit">by Julien Dante &amp; Vito Deriu</h1>
+        </div>
+    </header>
         <main>
             <p>{{.Hangman.Score}}/12</p>
-            <img class="hangman" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
+            <img class="cartetarot" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
              <p>{{.Hangman.Message}}</p>
             <p>{{.Word.Gs}}</p>
             <p>Les lettres que tu as déjà testé {{.Lst}}</p>
-            <form action="/treatment/jeu" method="POST">
+            <form class="form" action="/treatment/jeu" method="POST">
                 <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
 
                 <input type="text" name="lettre" id="lettre">

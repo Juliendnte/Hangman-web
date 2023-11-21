@@ -28,12 +28,12 @@ header{
 }
 
 .credit{
-    font-size: 1em;
+    font-size: 1.4em;
 }
 
 main{
     font-family: "OldLondon";
-    font-size: 2em;
+    font-size: 1.7em;
     display: flex;
     flex-direction: column;
     align-items: center;
