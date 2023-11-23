@@ -25,6 +25,11 @@ html{
     background-position: center;
 }
 
+body{
+    background-image: url(/assets/image/vecteezy_divider-in-medieval-style-for-ui-design-classic-bar-and_31380025.png);
+    background-position: above;
+}
+
 header{
     background-image: url(/static/image/BanniereTarotPendu.png);
     background-size: 455px;
@@ -83,6 +88,11 @@ main{
 .bouton :hover{
     scale: 1.05;
 }
+
+.form :focus{
+    border-radius: 8px; 
+}
+
 
 .input{
     background: none;
