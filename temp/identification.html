@@ -15,15 +15,18 @@
         </header>
         <main>
             <p>Bienvenue dans le Tarot du Pendu !</p>
-            <div class="cartetarot">
-                <img class="imgcarte" src="/static/image/tarot12.jpg" alt="carte de tarot du pendu">
+            <div class="container">
+                <div class="cartetarot">
+                    <img class="imgcarte" src="/static/image/tarot12.jpg" alt="carte de tarot du pendu">
+                </div>
+                <div class="formulaire">
+                    <p>Veuillez entrer votre pseudonyme</p>
+                    <form class="form" action="/treatment/identification" method="POST">
+                        <input class="input" type="text" id="pseudo" name="pseudo" maxlength="20" placeholder="Pseudo">
+                        <button class="bouton" type="submit"><img src="/static/image/BoutonJouer2.png" alt="bouton valider"></button>
+                    </form>
+                </div>
             </div>
-            <p>Veuillez entrer votre pseudonyme</p>
-            <form class="form" action="/treatment/identification" method="POST">
-                <label for="pseudo">Pseudo</label>
-                <input type="text" id="pseudo" name="pseudo" placeholder="Pseudo">
-                <button type="submit">Valider</button>
-            </form>
         </main>
 	    <footer>
 	    </footer>

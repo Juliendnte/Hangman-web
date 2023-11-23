@@ -3,6 +3,11 @@
     src: url(/static/fonts/OldLondon.ttf) format("truetype");
 }
 
+@font-face {
+    font-family: "EnchantedLand";
+    src: url(/static/fonts/EnchantedLand.otf) format("opentype");
+}
+
 @font-face{
     font-family: "CloisterBlack";
     src: url(/static/fonts/CloisterBlack.ttf) format("truetype");
@@ -32,7 +37,7 @@ header{
 }
 
 main{
-    font-family: "OldLondon";
+    font-family: "EnchantedLand";
     font-size: 1.7em;
     display: flex;
     flex-direction: column;
@@ -40,7 +45,7 @@ main{
 }
 
 .imgcarte{
-    width: 250px;
+    height: 60v
 }
 
 .form{
@@ -49,3 +54,34 @@ main{
     align-items: center;
 }
 
+
+.bouton{
+    background: none;
+    border: none;
+
+}
+
+.container{
+    display: flex;
+    justify-content: space-around;
+    width: 70vw;
+}
+
+.formulaire{
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    width: 40vw;
+}
+
+.bouton :hover{
+    scale: 1.05;
+}
+
+.input{
+    background: none;
+    border: none;
+    border-bottom: solid 1px ;
+    font-size: 30px;
+    font-family: "EnchantedLand";
+}
