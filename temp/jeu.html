@@ -14,19 +14,22 @@
         </div>
     </header>
         <main>
-            <p>{{.Hangman.Score}}/12</p>
-            <img class="cartetarot" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
-             <p>{{.Hangman.Message}}</p>
-            <p>{{.Word.Gs}}</p>
-            <p>Les lettres que tu as déjà testé {{.Lst}}</p>
-            <form class="form" action="/treatment/jeu" method="POST">
-                <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
-
-                <input type="text" name="lettre" id="lettre">
-                <button type="submit">Valider</button>
-
-            </form>
-
+            <p class="score">{{.Hangman.Score}}/12</p>
+            <div class="outscore">
+                <div class="carte">
+                    <img class="cartetarot" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
+                </div>
+                <div class="test">
+                    <p>{{.Hangman.Message}}</p>
+                    <p>{{.Word.Gs}}</p>
+                    <p>Les lettres que tu as déjà testé {{.Lst}}</p>
+                    <form class="form" action="/treatment/jeu" method="POST">
+                        <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
+                        <input type="text" name="lettre" id="lettre">
+                        <button calss="boutonvalider" type="submit"><img src="/static/image/ValiderButton.png" alt="bouton valider"></button>
+                    </form>
+                </div>
+            </div>
         </main>
 	    <footer>
 	    </footer>

@@ -8,26 +8,17 @@
     src: url(/static/fonts/EnchantedLand.otf) format("opentype");
 }
 
-@font-face{
-    font-family: "CloisterBlack";
-    src: url(/static/fonts/CloisterBlack.ttf) format("truetype");
-}
-
-@font-face {
-    font-family: "EnchantedLand";
-    src: url(/static/fonts/EnchantedLand.otf) format("opentype");
-}
-
 html{
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+body{
     background-image: url(/static/image/BackgroundPaper1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-}
-
-body{
-    background-image: url(/assets/image/vecteezy_divider-in-medieval-style-for-ui-design-classic-bar-and_31380025.png);
-    background-position: above;
+    height: 100vh;
 }
 
 header{

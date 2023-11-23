@@ -3,16 +3,22 @@
     src: url(/static/fonts/OldLondon.ttf) format("truetype");
 }
 
-@font-face{
-    font-family: "CloisterBlack";
-    src: url(/static/fonts/CloisterBlack.ttf) format("truetype");
+@font-face {
+    font-family: "EnchantedLand";
+    src: url(/static/fonts/EnchantedLand.otf) format("opentype");
 }
 
 html{
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+body{
     background-image: url(/static/image/BackgroundPaper1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    height: 100vh;
 }
 
 header{
@@ -32,13 +38,24 @@ header{
 }
 
 main{
-    font-family: "OldLondon";
-    font-size: 1.7em;
+    font-family: "EnchantedLand";
+    font-size: 1,7em;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 75vw;
-    
+    justify-content: center;
+    align-items: center;  
+}
+
+p{
+    width: 50vw;
+    display: flex;
+    justify-content : center;
+    text-align: justify;
+    font-size: 1.5em;
+}
+
+.choix{
+    font-size: 2em;
 }
 
 .imgcarte{
@@ -51,3 +68,19 @@ main{
     align-items: center;
 }
 
+.deroulant{
+    font-size: 1.7em;
+    background-color: #FFFED3;
+    border: 2px solid;
+    border-radius: 8px; 
+    margin-bottom: 40px;
+}
+
+.valider :hover {
+    scale: 1.05;
+}   
+
+.valider{
+    background: none;
+    border: none;
+}
