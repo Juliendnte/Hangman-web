@@ -18,6 +18,7 @@ func InitNiv(w http.ResponseWriter, r *http.Request) { //Pour le traitement d'un
 		http.Redirect(w, r, "/identification", http.StatusMovedPermanently)
 	}
 	hang.Player.Init() //Ré-initialise mes valeurs quand je reviens sur la page niveau
+	IndCheck = false
 	hang.Player.Niv = r.FormValue("Niveau")
 	hang.Player.Word.Answer = hang.ToLower(hang.WriteWord("mot/" + hang.Player.Niv + ".txt")) //Prend un mot aléatoire du mode choisi et le minusculise
 	hang.Player.Count()                                                                       //Init le mot underscore

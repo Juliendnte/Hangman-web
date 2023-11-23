@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	hang "hangman/Hangman"
 	initTemp "hangman/temp"
 	"net/http"
@@ -61,7 +60,6 @@ func Jeu(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
 	if hang.Player.Hangman.Score == 11 && IndCheck == false { //Pour l'indice
 		IndCheck = true
 		hang.Player.Hangman.Message = hang.Player.Hangman.Ind[hang.Player.LetterAleatory()]
-		fmt.Println(hang.Player.Hangman.Message)
 	}
 	hang.Player.ImgHangman() //Set le chemin de img que je renvoie à l'html
 	initTemp.Temp.ExecuteTemplate(w, "jeu", hang.Player)
