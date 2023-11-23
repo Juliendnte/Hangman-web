@@ -13,6 +13,11 @@
     src: url(/static/fonts/CloisterBlack.ttf) format("truetype");
 }
 
+@font-face {
+    font-family: "EnchantedLand";
+    src: url(/static/fonts/EnchantedLand.otf) format("opentype");
+}
+
 html{
     background-image: url(/static/image/BackgroundPaper1.jpg);
     background-repeat: no-repeat;
@@ -45,15 +50,15 @@ main{
 }
 
 .imgcarte{
-    height: 60v
+    height: 60vh;
 }
 
 .form{
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
+}
 
 .bouton{
     background: none;
