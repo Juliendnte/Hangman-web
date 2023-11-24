@@ -68,7 +68,8 @@ main{
     flex-direction: column;
 }
 
-.boutonvalider{
+.bouton{
     background: none;
     border: none;
+    
 }
