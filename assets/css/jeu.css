@@ -74,3 +74,15 @@ main{
     border: none;
     
 }
+
+.mess{
+    font-size: 30px;
+}
+
+.rouge{
+    color: red;
+}
+
+.vert{
+    color: green;
+}

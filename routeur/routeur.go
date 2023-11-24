@@ -19,6 +19,7 @@ func InitServe() { //Appelle la fonction attitré
 	rootDoc, _ := os.Getwd()
 	fileserver := http.FileServer(http.Dir(rootDoc + "/assets"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileserver))
+	
 	fmt.Println("(http://localhost:8081/) - Server started on port:8081")
 	http.ListenAndServe("localhost:8081", nil)
 	fmt.Println("Server close on port:8081")

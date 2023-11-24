@@ -20,9 +20,13 @@
                     <img class="cartetarot" src="/static/image/{{.Hangman.Img}}" alt="pendue" />
                 </div>
                 <div class="test">
-                    <p>{{.Hangman.Message}}</p>
-                    <p>{{.Word.Gs}}</p>
-                    <p>Les lettres que tu as déjà testé {{.Lst}}</p>
+                    {{if .Hangman.Check}}
+                    <p class="mess vert">{{.Hangman.Message}}</p>
+                    {{else}}
+                    <p class="mess rouge">{{.Hangman.Message}}</p>
+                    {{end}}
+                    <p class="gs">{{.Word.Gs}}</p>
+                    <p class="lst">Les lettres que tu as déjà testé {{.Lst}}</p>
                     <form class="form" action="/treatment/jeu" method="POST">
                         <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
                         <input type="text" name="lettre" id="lettre" autofocus>
