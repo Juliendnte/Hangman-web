@@ -61,6 +61,7 @@ func Jeu(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
 		IndCheck = true
 		hang.Player.Hangman.Message = hang.Player.Hangman.Ind[hang.Player.LetterAleatory()]
 	}
+	hang.Player.LstHtml=hang.TransformSliceWithSpace(hang.Player.Lst)
 	hang.Player.ImgHangman() //Set le chemin de img que je renvoie à l'html
 	initTemp.Temp.ExecuteTemplate(w, "jeu", hang.Player)
 }

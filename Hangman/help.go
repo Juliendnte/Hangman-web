@@ -225,3 +225,11 @@ func (p *Joueur) Count() string { //Va mettre le mot que le mec doit deviner ave
 	}
 	return p.Word.Gs
 }
+
+func TransformSliceWithSpace(s []string) string { //Met un []string en mot
+	var str string
+	for _, c := range s {
+		str += c+" "
+	}
+	return str
+}

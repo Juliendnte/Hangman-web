@@ -10,6 +10,7 @@ type Joueur struct {
 	Win        bool     //Pour savoir s'il a win
 	Test       string   //La lettre qu'il veut testé
 	Lst        []string //La liste de lettre qu'il a utilisé
+	LstHtml    string   //Lst en string
 	Hangman    Site
 }
 
