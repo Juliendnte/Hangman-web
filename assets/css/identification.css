@@ -34,12 +34,14 @@ header{
 }
 
 .credit{
-    font-size: 1.4em;
+    font-size: 1.8em;
+    font-family: "EnchantedLand";
+    font-weight: lighter;
 }
 
 main{
     font-family: "EnchantedLand";
-    font-size: 1.7em;
+    font-size: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,13 +55,6 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
-
-}
-
-.bouton{
-    background: none;
-    border: none;
-
 }
 
 .container{
@@ -74,16 +69,12 @@ main{
     align-items: center;
     justify-content: center;
     width: 40vw;
-}
 
-.bouton :hover{
-    scale: 1.05;
 }
 
 .form :focus{
     border-radius: 8px; 
 }
-
 
 .input{
     background: none;
@@ -91,4 +82,13 @@ main{
     border-bottom: solid 1px ;
     font-size: 30px;
     font-family: "EnchantedLand";
+}
+
+.bouton{
+    background: none;
+    border: none;
+}
+
+.bouton :hover{
+    scale: 1.05;
 }
