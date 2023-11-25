@@ -143,6 +143,7 @@ func IsInWord(word, s string) bool { // on regarde si une lettre est dans le mot
 func (p *Joueur) Init() {
 	p.Word.Gs = ""
 	p.Win = false
+	p.LstHtml=""
 	p.Test = ""
 	p.Hangman.Check = false
 	p.Hangman.Message = ""
@@ -150,7 +151,7 @@ func (p *Joueur) Init() {
 	p.Hangman.Score = 0
 	p.Lst = nil
 	p.Hangman.Img = "tarot0.jpg"
-	str := "Petit indice: Une des lettres que tu cherche"
+	str := "Petit indice:  Une des lettres que tu cherche"
 	p.Hangman.Ind = map[string]string{"a": str + " est un effet du lisopaine",
 		"b": str + " aide pour conduire tous véhicules dépassant 3tonne 5",
 		"c": str + " peut être en 50 ,100 ,150 ou 200 sur MarioKart",

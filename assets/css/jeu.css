@@ -75,6 +75,10 @@ main{
     
 }
 
+.bouton :hover{
+    scale: 1.05;
+}
+
 .mess{
     font-size: 30px;
 }
@@ -85,4 +89,8 @@ main{
 
 .vert{
     color: green;
+}
+
+p.gs{
+    font-size: 40px;
 }

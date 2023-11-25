@@ -57,7 +57,6 @@ main{
 
 
 .AffichageScore{
-
     font-size: 30px;
 }
 
@@ -65,3 +64,8 @@ main{
     background: none;
     border: none;
 }
+
+.recommencer:hover{
+    scale: 1.05;
+}
+
