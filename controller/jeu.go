@@ -30,7 +30,7 @@ func Jeu(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
 	} else if hang.IsInWord(hang.Player.Word.Answer, hang.Player.Test) { //Si la lettre est dans la réponde
 		if hang.IsInList(hang.Player.Lst, hang.Player.Test) { //S'il a déjà utilisé la lettre
 			hang.Player.Hangman.Check = false
-			hang.Player.Hangman.Message = "Vous avez déjà essayez cette lettre"
+			hang.Player.Hangman.Message = "Vous avez déjà essayé cette lettre"
 		} else {
 			hang.Player.Hangman.Message = "Bien trouvé"
 			hang.Player.Lst = hang.Append(hang.Player.Lst, hang.Player.Test) //Append ne l'ajoute que si la lettre n'est pas déjà dans sa liste
@@ -40,7 +40,7 @@ func Jeu(w http.ResponseWriter, r *http.Request) { //Pour la route jeu
 	} else {
 		hang.Player.Hangman.Check = false
 		if hang.IsInList(hang.Player.Lst, hang.Player.Test) {
-			hang.Player.Hangman.Message = "Vous avez déjà essayez cette lettre"
+			hang.Player.Hangman.Message = "Vous avez déjà essayé cette lettre"
 		} else {
 			hang.Player.Lst = hang.Append(hang.Player.Lst, hang.Player.Test)
 			hang.Player.Hangman.Score++

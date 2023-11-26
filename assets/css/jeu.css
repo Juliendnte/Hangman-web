@@ -86,3 +86,10 @@ main{
 .vert{
     color: green;
 }
+
+.list{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

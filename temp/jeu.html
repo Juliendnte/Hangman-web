@@ -26,7 +26,10 @@
                     <p class="mess rouge">{{.Hangman.Message}}</p>
                     {{end}}
                     <p class="gs">{{.Word.Gs}}</p>
-                    <p class="lst">Les lettres que tu as déjà testé {{.LstHtml}}</p>
+                    <div class="list">
+                        <div><p class="lst">Les lettres que tu as déjà testé </p></div>
+                        <div><p>{{.LstHtml}}</p></div>
+                    </div>
                     <form class="form" action="/treatment/jeu" method="POST">
                         <label for="lettre">Saisissez la lettre ou mot que vous voulez testées</label>
                         <input type="text" name="lettre" id="lettre" autofocus>
