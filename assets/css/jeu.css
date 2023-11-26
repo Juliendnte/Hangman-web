@@ -75,6 +75,10 @@ main{
     
 }
 
+.bouton :hover{
+    scale: 1.05;
+}
+
 .mess{
     font-size: 30px;
 }
